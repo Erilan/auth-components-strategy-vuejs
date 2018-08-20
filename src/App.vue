@@ -1,17 +1,32 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-view v-if="isLoggedIn"></router-view>
+    <TheLogin v-else @TheLogin::loginResult="handleLoginResult"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TheLogin from './components/TheLogin'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    TheLogin
+  },
+  data() {
+    return {
+      userIsLoggedIn: false
+    }
+  },
+  computed: {
+    isLoggedIn() {
+      return this.userIsLoggedIn
+    }
+  },
+  methods: {
+    handleLoginResult({loginResult}) {
+      this.userIsLoggedIn = loginResult
+    }
   }
 }
 </script>
